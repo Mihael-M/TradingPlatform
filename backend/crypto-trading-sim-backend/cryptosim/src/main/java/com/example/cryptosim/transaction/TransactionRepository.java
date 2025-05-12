@@ -24,14 +24,15 @@ public class TransactionRepository {
     // Making a new transaction...
 
     public TransactionEntity createTransaction(TransactionEntity entity) {
-        String sql = "INSERT INTO transactions (id, type, crypto_symbol, quantity, unit_price, profit_loss, created_at, account_id)" +
-                     "VALUES ($1, $2, $3, $4, $5, $6, $7)";
+        String sql = "INSERT INTO transactions (id, type, crypto_symbol, quantity, unit_price, profit_loss, created_at, account_id) VALUES (?, ?::transaction_type, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemplate.update(sql,
                 entity.getId(),
                 entity.getType().toString(),
                 entity.getCryptoSymbol(),
                 entity.getQuantity(),
+                entity.getUnitPrice(),
+                entity.getProfitLoss(),
                 entity.getCreatedAt(),
                 entity.getAccountId()
         );
@@ -46,7 +47,7 @@ public class TransactionRepository {
 
     public TransactionEntity getTransaction(String id) {
         try {
-            String sql = "SELECT id, type, crypto_symbol, quantity, unit_price, profit_loss, created_at FROM transactions WHERE id = $1";
+            String sql = "SELECT id, type, crypto_symbol, quantity, unit_price, profit_loss, created_at,account_id FROM transactions WHERE id = ?";
             TransactionEntity entity = jdbcTemplate.queryForObject(sql, new TransactionRowMapper(uuidConverter), id);
             return entity;
         } catch (Exception e) {

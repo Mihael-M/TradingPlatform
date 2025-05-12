@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.*;
+import utills.model.Crypto;
+
 import java.net.URI;
 
 @ClientEndpoint
@@ -31,7 +33,10 @@ public class KrakenWebSocketClient {
                    "method": "subscribe",
                    "params": {
                      "channel": "ticker",
-                     "symbol": ["BTC/USD", "ETH/USD"]
+                     "symbol": [
+                       "BTC/USD", "ETH/USD", "USDT/USD", "BNB/USD", "SOL/USD", "XRP/USD", "DOGE/USD", "TON/USD", "ADA/USD", "AVAX/USD",
+                       "SHIB/USD", "DOT/USD", "WTRX/USD", "LINK/USD", "ICP/USD", "MATIC/USD", "NEAR/USD", "BCH/USD", "UNI/USD", "LTC/USD"
+                     ]
                    }
                  }
             """;
@@ -41,16 +46,20 @@ public class KrakenWebSocketClient {
 
     @OnMessage
     public void onMessage(String message) throws JsonProcessingException {
-        System.out.println("Received message: " + message);
+        //System.out.println("Received message: " + message);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(message);
 
-// Simplified check
-        if (node.has("symbol") && node.has("price")) {
-            String symbol = node.get("symbol").asText();
-            double price = node.get("price").asDouble();
-            System.out.println(symbol + ": " + price);
-            PriceCache.updatePrice(symbol, price);
+        if (node.has("channel") && "ticker".equals(node.get("channel").asText()) && node.has("data")) {
+            JsonNode dataArray = node.get("data");
+            for (JsonNode data : dataArray) {
+                String symbol = data.get("symbol").asText();
+                double price = data.get("last").asDouble();
+
+                Crypto crypto = new Crypto(symbol, price);
+                //System.out.println(crypto);
+                PriceCache.updatePrice(symbol, price);
+            }
         }
     }
 

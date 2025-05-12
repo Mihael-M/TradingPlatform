@@ -19,10 +19,9 @@ public class TransactionRowMapper implements RowMapper<TransactionEntity> {
     }
     @Override
     public TransactionEntity mapRow(ResultSet rs, int rowNum) throws SQLException {
-        TransactionType type = "SELL".equals(rs.getString("type")) ? TransactionType.SELL : TransactionType.BUY;
         return new TransactionEntity(
                 uuidConverter.convertFromString(rs.getString("id")),
-                type,
+                "SELL".equals(rs.getString("type")) ? TransactionType.SELL : TransactionType.BUY,
                 rs.getString("crypto_symbol"),
                 rs.getDouble("quantity"),
                 rs.getDouble("unit_price"),

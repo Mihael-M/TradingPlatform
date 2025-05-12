@@ -22,7 +22,8 @@ public class HoldingRepository {
 
     public HoldingEntity createHolding(HoldingEntity holdingEntity) {
         String sql = "INSERT INTO holdings (id, crypto, quantity, total_value, account_id)" +
-                "VALUES ($1, $2, $3, $4, $5, $6)";
+                "VALUES (?, ?, ?, ?, ?)";
+
         jdbcTemplate.update(sql,
                 holdingEntity.getId(),
                 holdingEntity.getCrypto(),
@@ -42,7 +43,7 @@ public class HoldingRepository {
 
     public HoldingEntity getHolding(UUID id) {
         try {
-            String sql = "SELECT id, crypto, quantity, total_value, account_id FROM holdings WHERE id = $1";
+            String sql = "SELECT id, crypto, quantity, total_value, account_id FROM holdings WHERE id = ?";
             HoldingEntity entity =jdbcTemplate.queryForObject(sql, new HoldingRowMapper(uuidConverter), id);
             return entity;
         } catch (Exception e) {
@@ -51,7 +52,7 @@ public class HoldingRepository {
     }
     public HoldingEntity getHolding(String crypto) {
         try {
-            String sql = "SELECT id, crypto, quantity, total_value, account_id FROM holdings WHERE crypto = $1";
+            String sql = "SELECT id, crypto, quantity, total_value, account_id FROM holdings WHERE crypto = ?";
             HoldingEntity entity =jdbcTemplate.queryForObject(sql, new HoldingRowMapper(uuidConverter), crypto);
             return entity;
         } catch (Exception e) {
@@ -59,7 +60,7 @@ public class HoldingRepository {
         }
     }
     public HoldingEntity updateHolding(HoldingEntity holdingEntity) {
-        String sql = "UPDATE holdings SET quantity = $1, total_value = $2 WHERE id = $3";
+        String sql = "UPDATE holdings SET quantity = ?, total_value = ? WHERE id = ?";
         jdbcTemplate.update(sql, holdingEntity.getQuantity(), holdingEntity.getTotalValue(), holdingEntity.getId());
         return holdingEntity;
     }
@@ -69,7 +70,7 @@ public class HoldingRepository {
     }
 
     public boolean deleteHolding(UUID id) {
-        String sql = "DELETE FROM holdings WHERE id = $1";
+        String sql = "DELETE FROM holdings WHERE id = ?";
         return jdbcTemplate.update(sql, id) >= 1;
     }
 }

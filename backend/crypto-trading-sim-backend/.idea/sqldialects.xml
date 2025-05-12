@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/cryptosim/src/main/java/com/example/cryptosim/account/AccountRepository.java" dialect="PostgreSQL" />
-    <file url="file://$PROJECT_DIR$/cryptosim/src/main/java/com/example/cryptosim/holding/HodlingRepository.java" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/cryptosim/src/main/java/com/example/cryptosim/holding/HoldingRepository.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/cryptosim/src/main/java/com/example/cryptosim/transaction/TransactionRepository.java" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/cryptosim/src/main/resources/initial_schema_down.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/cryptosim/src/main/resources/initial_schema_up.sql" dialect="PostgreSQL" />

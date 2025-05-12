@@ -6,6 +6,8 @@ import com.example.cryptosim.create.Create;
 import com.example.cryptosim.entity.TransactionEntity;
 import com.example.cryptosim.holding.HoldingRepository;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import utills.model.Transaction;
 import utills.model.exceptions.NotEnoughBalanceToBuy;
 import utills.model.exceptions.NotEnoughHoldings;
@@ -13,6 +15,7 @@ import utills.model.exceptions.TransactionNotFoundException;
 import utills.model.types.TransactionType;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class TransactionService implements Service {
@@ -21,7 +24,8 @@ public class TransactionService implements Service {
     private final AccountRepository accountRepository;
     private final ITransactionConverter transactionConverter;
     private final Create create;
-    // TODO: add account repo as dependency
+
+    private static final Logger logger = LoggerFactory.getLogger(TransactionService.class);
 
     public TransactionService(TransactionRepository transactionRepository, HoldingRepository holdingRepository, ITransactionConverter transactionConverter, AccountRepository accountRepository
     , Create create) {
@@ -33,23 +37,31 @@ public class TransactionService implements Service {
     }
     @Override
     public Transaction createTransaction(Transaction transaction) {
-        var transactionEntity = this.transactionConverter.convertToEntity(transaction);
 
-        // 1. Check if price is cached, if not, retrieve it from CoinService and cache it.
-        double price = getCachedOrFetchPrice(transactionEntity.getCryptoSymbol());
-        transactionEntity.setUnitPrice(price);
+        try {
+            if (transaction.getId() == null || transaction.getId().isBlank()) {
+                transaction.setId(UUID.randomUUID().toString());
+            }
+            var transactionEntity = this.transactionConverter.convertToEntity(transaction);
 
-        // 2. Handle BUY and SELL transaction types
-        TransactionType type = transactionEntity.getType();
-        if (type == TransactionType.BUY) {
-            handleBuyTransaction(transactionEntity, price);
-        } else if (type == TransactionType.SELL) {
-            handleSellTransaction(transactionEntity, price);
+            // 1. Check if price is cached, if not, retrieve it from CoinService and cache it.
+            double price = getCachedOrFetchPrice(transactionEntity.getCryptoSymbol());
+            transactionEntity.setUnitPrice(price);
+
+            // 2. Handle BUY and SELL transaction types
+            TransactionType type = transactionEntity.getType();
+            if (type == TransactionType.BUY) {
+                handleBuyTransaction(transactionEntity, price);
+            } else if (type == TransactionType.SELL) {
+                handleSellTransaction(transactionEntity, price);
+            }
+
+            // 3. After handling the transaction, save it via transactionRepository
+            this.transactionRepository.createTransaction(transactionEntity);
+            return this.transactionConverter.convertToUser(transactionEntity);
+        } catch (Exception e) {
+            throw e;
         }
-
-        // 3. After handling the transaction, save it via transactionRepository
-        this.transactionRepository.createTransaction(transactionEntity);
-        return this.transactionConverter.convertToUser(transactionEntity);
     }
 
     // Helper: get price from cache or fetch from CoinService and cache it
@@ -85,10 +97,12 @@ public class TransactionService implements Service {
         var holding = holdingRepository.getHolding(transactionEntity.getCryptoSymbol());
         if (holding == null) {
             // Create new holding
-            holdingRepository.createHolding(create.createHolding(transactionEntity));
+            var entity = create.createHolding(transactionEntity);
+            holdingRepository.createHolding(entity);
         } else {
             // Update holding: increase quantity and update price
             holding.setQuantity(holding.getQuantity() + transactionEntity.getQuantity());
+            holding.setTotalValue(holding.getTotalValue() + transactionEntity.getQuantity() * price);
             holdingRepository.updateHolding(holding);
         }
     }

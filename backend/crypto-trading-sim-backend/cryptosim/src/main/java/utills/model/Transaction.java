@@ -5,7 +5,7 @@ import utills.model.types.TransactionType;
 import java.time.LocalDateTime;
 
 public class Transaction {
-    private final String id;
+    private String id;
     private TransactionType type;  // "BUY" or "SELL"
     private String crypto;         // e.g., "BTC"
     private double quantity;       // Amount of cryptocurrency bought/sold
@@ -23,6 +23,10 @@ public class Transaction {
         this.timestamp = timestamp;
         this.accountId = accountId;
         this.profitLoss = profitLoss;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAccountId() {

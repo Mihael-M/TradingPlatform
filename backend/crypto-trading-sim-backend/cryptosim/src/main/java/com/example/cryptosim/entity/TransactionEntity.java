@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class TransactionEntity {
-    private final UUID id;                  // Unique identifier for the transaction
+    private UUID id;                  // Unique identifier for the transaction
     private TransactionType type;           // Transaction type: "BUY" or "SELL"
     private String cryptoSymbol;            // Symbol for the cryptocurrency (e.g., "BTC")
     private double quantity;                // Quantity of cryptocurrency
@@ -26,6 +26,10 @@ public class TransactionEntity {
         this.createdAt = createdAt;
         this.accountId = accountId;
         this.profitLoss = profitLoss;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Double getProfitLoss() {
