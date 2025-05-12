@@ -20,7 +20,6 @@ public class HoldingRowMapper implements RowMapper<HoldingEntity> {
                 rs.getString("crypto"),
                 rs.getDouble("quantity"),
                 rs.getDouble("total_value"),
-                rs.getDouble("profit_loss"),
                 uuidConverter.convertFromString(rs.getString("account_id"))
 
         );

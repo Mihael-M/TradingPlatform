@@ -3,8 +3,9 @@ package com.example.cryptosim.create;
 import com.example.cryptosim.entity.HoldingEntity;
 import com.example.cryptosim.entity.TransactionEntity;
 import com.example.cryptosim.generators.IUUIDGenerator;
-import com.example.cryptosim.generators.UUIDGenerator;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HoldingFromTransaction implements Create {
     private final IUUIDGenerator uuidGenerator;
 

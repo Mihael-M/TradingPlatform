@@ -4,8 +4,8 @@ import com.example.cryptosim.account.AccountRepository;
 import com.example.cryptosim.converters.ITransactionConverter;
 import com.example.cryptosim.create.Create;
 import com.example.cryptosim.entity.TransactionEntity;
-import com.example.cryptosim.generators.IUUIDGenerator;
-import com.example.cryptosim.holding.HodlingRepository;
+import com.example.cryptosim.holding.HoldingRepository;
+import org.springframework.stereotype.Component;
 import utills.model.Transaction;
 import utills.model.exceptions.NotEnoughBalanceToBuy;
 import utills.model.exceptions.NotEnoughHoldings;
@@ -14,19 +14,19 @@ import utills.model.types.TransactionType;
 
 import java.util.List;
 
-
+@Component
 public class TransactionService implements Service {
     private final TransactionRepository transactionRepository;
-    private final HodlingRepository holdingRepository;
+    private final HoldingRepository holdingRepository;
     private final AccountRepository accountRepository;
     private final ITransactionConverter transactionConverter;
     private final Create create;
     // TODO: add account repo as dependency
 
-    public TransactionService(TransactionRepository transactionRepository,HodlingRepository hodlingRepository, ITransactionConverter transactionConverter,  AccountRepository accountRepository
+    public TransactionService(TransactionRepository transactionRepository, HoldingRepository holdingRepository, ITransactionConverter transactionConverter, AccountRepository accountRepository
     , Create create) {
         this.transactionRepository = transactionRepository;
-        this.holdingRepository = hodlingRepository;
+        this.holdingRepository = holdingRepository;
         this.transactionConverter = transactionConverter;
         this.accountRepository = accountRepository;
         this.create = create;

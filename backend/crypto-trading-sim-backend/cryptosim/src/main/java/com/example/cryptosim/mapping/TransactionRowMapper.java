@@ -26,6 +26,7 @@ public class TransactionRowMapper implements RowMapper<TransactionEntity> {
                 rs.getString("crypto_symbol"),
                 rs.getDouble("quantity"),
                 rs.getDouble("unit_price"),
+                rs.getDouble("profit_loss"),
                 rs.getTimestamp("created_at").toLocalDateTime(),
                 uuidConverter.convertFromString(rs.getString("account_id"))
         );

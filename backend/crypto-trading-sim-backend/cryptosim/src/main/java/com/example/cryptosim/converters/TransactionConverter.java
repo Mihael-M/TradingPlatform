@@ -1,9 +1,10 @@
 package com.example.cryptosim.converters;
 
+import org.springframework.stereotype.Component;
 import utills.model.Transaction;
 import com.example.cryptosim.entity.TransactionEntity;
 
-
+@Component
 public class TransactionConverter implements ITransactionConverter {
     private IUUIDConverter uuidConverter;
 
@@ -19,6 +20,7 @@ public class TransactionConverter implements ITransactionConverter {
               entity.getCryptoSymbol(),
               entity.getQuantity(),
               entity.getUnitPrice(),
+              entity.getProfitLoss(),
               entity.getCreatedAt(),
                 entity.getAccountId().toString()
         );
@@ -31,6 +33,7 @@ public class TransactionConverter implements ITransactionConverter {
                 user.getCrypto(),
                 user.getQuantity(),
                 user.getUnitPrice(),
+                user.getProfitLoss(),
                 user.getTimestamp(),
                 uuidConverter.convertFromString(user.getAccountId())
         );

@@ -18,7 +18,6 @@ public class HoldingConverter implements IHoldingConverter {
                 entity.getCrypto(),
                 entity.getQuantity(),
                 entity.getTotalValue(),
-                entity.getProfitLoss(),
                 entity.getAccountId().toString()
         );
     }
@@ -30,7 +29,6 @@ public class HoldingConverter implements IHoldingConverter {
                 user.getCrypto(),
                 user.getQuantity(),
                 user.getTotalValue(),
-                user.getProfitLoss(),
                 uuidConverter.convertFromString(user.getAccountId())
         );
     }

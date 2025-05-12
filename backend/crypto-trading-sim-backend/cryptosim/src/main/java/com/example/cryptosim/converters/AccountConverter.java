@@ -1,8 +1,10 @@
 package com.example.cryptosim.converters;
 
 import com.example.cryptosim.entity.AccountEntity;
+import org.springframework.stereotype.Component;
 import utills.model.Account;
 
+@Component
 public class AccountConverter implements IAccountConverter {
     private IUUIDConverter uuidConverter;
 
