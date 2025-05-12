@@ -5,12 +5,16 @@ import java.util.UUID;
 public class HoldingEntity {
     private final UUID id;
     private final String crypto;
-    private Double amount;
+    private Double quantity;
+    private Double totalValue;
+    private UUID accountId;
 
-    public HoldingEntity(String crypto, Double amount) {
-        this.id = UUID.randomUUID();
+    public HoldingEntity(UUID holdingId,String crypto, Double quantity,Double totalValue, UUID id) {
+        this.id = holdingId;
         this.crypto = crypto;
-        this.amount = amount;
+        this.quantity = quantity;
+        this.totalValue = totalValue;
+        this.accountId = id;
     }
     public UUID getId() {
         return id;
@@ -19,11 +23,26 @@ public class HoldingEntity {
         return crypto;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getQuantity() {
+        return quantity;
     }
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
     }
 
+    public Double getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(Double totalValue) {
+        this.totalValue = totalValue;
+    }
+
+    public UUID getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(UUID accountId) {
+        this.accountId = accountId;
+    }
 }

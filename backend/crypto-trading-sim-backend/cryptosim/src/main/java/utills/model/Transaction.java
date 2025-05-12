@@ -4,21 +4,45 @@ import utills.model.types.TransactionType;
 
 import java.time.LocalDateTime;
 
-public class UserTransaction {
+public class Transaction {
+    private final String id;
     private TransactionType type;  // "BUY" or "SELL"
     private String crypto;         // e.g., "BTC"
     private double quantity;       // Amount of cryptocurrency bought/sold
-    private double unitPrice;      // Price per unit at the time of transaction
-    private double totalValue;     // Calculated value (quantity * price)
+    private double unitPrice;       // Price per unit at the time of transaction
+    private double profitLoss;
     private LocalDateTime timestamp; // Timestamp of the transaction
+    private String accountId;
 
-    public UserTransaction(TransactionType type, String crypto, double quantity, double unitPrice, LocalDateTime timestamp) {
+    public Transaction(String id, TransactionType type, String crypto, double quantity, double unitPrice,double profitLoss, LocalDateTime timestamp, String accountId) {
+        this.id = id;
         this.type = type;
         this.crypto = crypto;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.totalValue = quantity * unitPrice;
         this.timestamp = timestamp;
+        this.accountId = accountId;
+        this.profitLoss = profitLoss;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public double getProfitLoss() {
+        return profitLoss;
+    }
+
+    public void setProfitLoss(double profitLoss) {
+        this.profitLoss = profitLoss;
     }
 
     public TransactionType getType() {
@@ -43,7 +67,6 @@ public class UserTransaction {
 
     public void setQuantity(double quantity) {
         this.quantity = quantity;
-        recalculateTotal();
     }
 
     public double getUnitPrice() {
@@ -52,12 +75,8 @@ public class UserTransaction {
 
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
-        recalculateTotal();
     }
 
-    public double getTotalValue() {
-        return totalValue;
-    }
 
     public LocalDateTime getTimestamp() {
         return timestamp;
@@ -67,8 +86,4 @@ public class UserTransaction {
         this.timestamp = timestamp;
     }
 
-    // Method to recalculate total value when quantity or unit price changes
-    private void recalculateTotal() {
-        this.totalValue = this.quantity * this.unitPrice;
-    }
 }

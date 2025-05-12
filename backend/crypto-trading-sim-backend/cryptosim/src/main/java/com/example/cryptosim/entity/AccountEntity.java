@@ -1,15 +1,13 @@
-package utills.model;
+package com.example.cryptosim.entity;
 
-import com.example.cryptosim.entity.HoldingEntity;
+import java.util.UUID;
 
-import java.util.List;
-
-public class Account {
-    private String id;
+public class AccountEntity {
+    private UUID id;
     private Double balance;
     private String email;
 
-    public Account(String id,Double balance, String email) {
+    public AccountEntity(UUID id, Double balance, String email) {
         this.id = id;
         this.balance = balance;
         this.email = email;
@@ -23,16 +21,16 @@ public class Account {
         this.balance = balance;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getEmail() {
         return email;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setEmail(String email) {

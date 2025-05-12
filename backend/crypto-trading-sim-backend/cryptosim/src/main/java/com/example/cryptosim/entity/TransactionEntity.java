@@ -11,18 +11,38 @@ public class TransactionEntity {
     private String cryptoSymbol;            // Symbol for the cryptocurrency (e.g., "BTC")
     private double quantity;                // Quantity of cryptocurrency
     private double unitPrice;
-    private LocalDateTime timestamp;               // Timestamp of the transaction
+    private Double profitLoss;
+    private LocalDateTime createdAt;        // Timestamp of the transaction
+    private UUID accountId;
 
-    public TransactionEntity(TransactionType type, String cryptoSymbol, double quantity,
-                             double unitPrice,LocalDateTime timestamp) {
-        this.id = UUID.randomUUID();  // Automatically generate a unique UUID for each transaction
+
+    public TransactionEntity(UUID id, TransactionType type, String cryptoSymbol, double quantity,
+                             double unitPrice,double profitLoss,LocalDateTime createdAt, UUID accountId) {
+        this.id =  id;
         this.type = type;
         this.cryptoSymbol = cryptoSymbol;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
-        this.timestamp = timestamp;
+        this.createdAt = createdAt;
+        this.accountId = accountId;
+        this.profitLoss = profitLoss;
     }
 
+    public Double getProfitLoss() {
+        return profitLoss;
+    }
+
+    public void setProfitLoss(Double profitLoss) {
+        this.profitLoss = profitLoss;
+    }
+
+    public UUID getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(UUID accountId) {
+        this.accountId = accountId;
+    }
 
     public UUID getId() {
         return id;
@@ -52,12 +72,12 @@ public class TransactionEntity {
         this.quantity = quantity;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public double getUnitPrice() {

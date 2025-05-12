@@ -1,0 +1,7 @@
+BEGIN TRANSACTION;
+
+TRUNCATE TABLE account;
+TRUNCATE TABLE holdings;
+TRUNCATE TABLE transactions;
+
+COMMIT;
