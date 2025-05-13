@@ -55,7 +55,6 @@ public class TransactionService implements Service {
             } else if (type == TransactionType.SELL) {
                 handleSellTransaction(transactionEntity, price);
             }
-
             // 3. After handling the transaction, save it via transactionRepository
             this.transactionRepository.createTransaction(transactionEntity);
             return this.transactionConverter.convertToUser(transactionEntity);

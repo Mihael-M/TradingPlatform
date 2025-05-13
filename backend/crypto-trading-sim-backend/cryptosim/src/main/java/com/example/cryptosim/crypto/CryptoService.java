@@ -1,28 +1,27 @@
 package com.example.cryptosim.crypto;
 
+import com.example.cryptosim.websocket.KrakenWebSocketClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import utills.model.Crypto;
 import utills.model.exceptions.FailedToLoadCrypto;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Component
 
 public class CryptoService {
-    private final RestTemplate restTemplate;
+    private KrakenWebSocketClient krakenWebSocketClient;
 
-    public CryptoService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public CryptoService(KrakenWebSocketClient krakenWebSocketClient) {
+        this.krakenWebSocketClient = krakenWebSocketClient;
     }
 
-    public double getCoinPrice(String cryptoId) throws Exception {
-        String url = formatUrl(cryptoId);
-        ResponseEntity<Crypto> response = restTemplate.getForEntity(url, Crypto.class);
-        Crypto coin = response.getBody();
-        if (coin == null) {
-            throw new FailedToLoadCrypto("Unavailable crypto token");
-        }
-        return coin.getCurrentPrice();
-    }
+//    public double getCoinPrice(String cryptoId) throws Exception {
+//       //return krakenWebSocketClient.onMessage().getCurrentPrice();
+//    }
 
     private String formatUrl(String cryptoId) {
-        return String.format("https://api.binance.com/api/v3/ticker/price?symbol=%sUSDT", cryptoId);
+        return String.format("https://api.kraken.com/0/public/Ticker?pair=%sUSD", cryptoId);
     }
 }

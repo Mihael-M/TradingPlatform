@@ -17,12 +17,11 @@ public class AccountController {
     }
 
     @GetMapping("/balance")
-    public ResponseEntity<Map<String, String>> getBalance() {
+    public ResponseEntity<Map<String, Double>> getBalance() {
         try {
             double balance = accountService.getBalance();
-            String encoded = String.format("%.2f$", balance);
-            Map<String, String> response = new HashMap<>();
-            response.put("balance", encoded);
+            Map<String, Double> response = new HashMap<>();
+            response.put("balance", balance);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
@@ -44,7 +43,7 @@ public class AccountController {
         }
     }
 
-    @DeleteMapping("/reset")
+    @PostMapping("/reset")
     public ResponseEntity<Map<String, String>> resetAccount() {
         try {
             boolean success = accountService.resetAccount();
@@ -53,6 +52,7 @@ public class AccountController {
             response.put("reset", encoded);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.internalServerError().build();
         }
     }

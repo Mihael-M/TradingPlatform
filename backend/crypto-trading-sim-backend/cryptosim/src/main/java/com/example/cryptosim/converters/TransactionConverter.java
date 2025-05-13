@@ -27,16 +27,20 @@ public class TransactionConverter implements ITransactionConverter {
     }
 
     public TransactionEntity convertToEntity(Transaction user) {
-        return new TransactionEntity(
-                uuidConverter.convertFromString(user.getId()),
-                user.getType(),
-                user.getCrypto(),
-                user.getQuantity(),
-                user.getUnitPrice(),
-                user.getProfitLoss(),
-                user.getTimestamp(),
-                uuidConverter.convertFromString(user.getAccountId())
-        );
+        try {
+            return new TransactionEntity(
+                    uuidConverter.convertFromString(user.getId()),
+                    user.getType(),
+                    user.getCrypto(),
+                    user.getQuantity(),
+                    user.getUnitPrice(),
+                    user.getProfitLoss(),
+                    user.getTimestamp(),
+                    uuidConverter.convertFromString(user.getAccountId())
+            );
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid UUID format for accountId: " + user.getAccountId());
+        }
     }
 
 }

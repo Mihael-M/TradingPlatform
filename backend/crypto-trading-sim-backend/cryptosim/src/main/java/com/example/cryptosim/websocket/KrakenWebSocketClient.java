@@ -5,15 +5,42 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.websocket.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import utills.model.Crypto;
 
 import java.net.URI;
 
 @ClientEndpoint
+@Component
 public class KrakenWebSocketClient {
 
     private Session session;
+    private final PriceWebSocketHandler priceWebSocketHandler;
 
+    @Autowired
+    public KrakenWebSocketClient(PriceWebSocketHandler priceWebSocketHandler) {
+        this.priceWebSocketHandler = priceWebSocketHandler;
+    }
+
+    @OnMessage
+    public void onMessage(String message) throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(message);
+
+        if (node.has("channel") && "ticker".equals(node.get("channel").asText()) && node.has("data")) {
+            JsonNode dataArray = node.get("data");
+            for (JsonNode data : dataArray) {
+                String symbol = data.get("symbol").asText();
+                double price = data.get("last").asDouble();
+
+                // Create the price update message to send
+                String priceUpdate = "{ \"symbol\": \"" + symbol + "\", \"price\": " + price + " }";
+                // Forward the price update to the frontend
+                priceWebSocketHandler.sendPriceUpdate(priceUpdate);
+            }
+        }
+    }
     public void connect(String uri) {
         WebSocketContainer container = ContainerProvider.getWebSocketContainer();
         try {
@@ -40,28 +67,14 @@ public class KrakenWebSocketClient {
                    }
                  }
             """;
-
-        sendMessage(subscribeMessage);
-    }
-
-    @OnMessage
-    public void onMessage(String message) throws JsonProcessingException {
-        //System.out.println("Received message: " + message);
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(message);
-
-        if (node.has("channel") && "ticker".equals(node.get("channel").asText()) && node.has("data")) {
-            JsonNode dataArray = node.get("data");
-            for (JsonNode data : dataArray) {
-                String symbol = data.get("symbol").asText();
-                double price = data.get("last").asDouble();
-
-                Crypto crypto = new Crypto(symbol, price);
-                //System.out.println(crypto);
-                PriceCache.updatePrice(symbol, price);
-            }
+        try {
+            session.getBasicRemote().sendText(subscribeMessage);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
 
     @OnClose
     public void onClose(Session session, CloseReason reason) {

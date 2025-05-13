@@ -41,7 +41,7 @@ public class TransactionController {
         }
         try {
             Transaction created = transactionService.createTransaction(transaction);
-            return ResponseEntity.ok(created);
+            return ResponseEntity.created(null).body(created);
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }

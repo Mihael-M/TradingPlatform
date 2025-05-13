@@ -54,7 +54,17 @@ public class AccountRepository {
     }
     public boolean resetAccount()
     {
+        String deleteTransactionsSql = "DELETE FROM transactions WHERE account_id = (SELECT id FROM account WHERE email = ?)";
+        jdbcTemplate.update(deleteTransactionsSql, "admin@gmail.com");
+
+        String deleteHoldingsSql = "DELETE FROM holdings WHERE account_id = (SELECT id FROM account WHERE email = ?)";
+        jdbcTemplate.update(deleteHoldingsSql, "admin@gmail.com");
+
         String sql = "DELETE FROM account WHERE email = ?";
-        return jdbcTemplate.update(sql, "admin@gmail.com") >= 1;
+        boolean reset = false;
+        reset = jdbcTemplate.update(sql, "admin@gmail.com") >= 1;
+        createAccount();
+        return reset;
+
     }
 }
