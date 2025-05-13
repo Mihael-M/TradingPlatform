@@ -6,32 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading Platform</title>
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/images.css">
+
 </head>
 <body>
-    <h1>Welcome to the Trading Platform</h1>
-    
-    <!-- Tabs -->
-    <div class="tabs">
-        <div class="tab active" data-target="tab1">Trading Dashboard</div>
-        <div class="tab" data-target="tab2">Portfolio</div>
+<h1>Welcome to the Trading Platform</h1>
+
+<!-- Tabs -->
+<div class="tabs">
+    <div class="tab active" data-target="tab1">
+        <img class="tab-button" src="assets/stock_2737446.png" alt="Trading Dashboard">
+    </div>
+    <div class="tab" data-target="tab2">
+        <img class="tab-button" src="assets/app_14278234.png" alt="Trading Dashboard">
+    </div>
+</div>
+
+<!-- Tab Content -->
+<div id="tab1" class="tab-content active">
+    <h2>Trading Dashboard</h2>
+    <h1>Live Cryptocurrency Prices</h1>
+
+    <div id="cryptoList">
+        <p>Loading cryptocurrency prices...</p>
     </div>
 
-    <!-- Tab Content -->
-    <div id="tab1" class="tab-content active">
-        <h2>Trading Dashboard</h2>
-        <p>This is where you can view real-time trading data and make trades.</p>
-        <img src="assets/stock_2737446.png" alt="Trading Dashboard">
-    </div>
-    <div id="tab2" class="tab-content">
-        <h2>Portfolio</h2>
-        <p>This is where you can view the details of your investment portfolio.</p>
-    </div>
+
+</div>
+<div id="tab2" class="tab-content">
+    <h2>Portfolio</h2>
+    <p>This is where you can view the details of your investment portfolio.</p>
+</div>
 
 
-
-
-
-    <!-- JavaScript Reference -->
-    <script src="js/app.js"></script>
+<!-- JavaScript Reference -->
+<script src="js/app.js"></script>
+<script src="js/priceDisplay.js"></script>
 </body>
 </html>
