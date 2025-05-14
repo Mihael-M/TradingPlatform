@@ -79,3 +79,7 @@ body {
 .price-item:last-child {
     border-bottom: none;
 }
+
+.cancel-button{
+    cursor: pointer;
+}

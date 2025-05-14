@@ -85,7 +85,9 @@ public class TransactionService implements Service {
             throw new NotEnoughHoldings("Not enough holdings to SELL");
         }
         holding.setQuantity(holding.getQuantity() - transactionEntity.getQuantity());
+
         holding.setTotalValue(holding.getTotalValue() - transactionEntity.getQuantity() * transactionEntity.getUnitPrice());
+
         if (holding.getQuantity() <= 0) {
             holdingRepository.deleteHolding(holding.getId());
         } else {

@@ -37,39 +37,38 @@
     <div id="cryptoList">
         <p>Loading cryptocurrency prices...</p>
     </div>
-    <div id="buyModal" class="modal">
+
+    <div id="buyModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Enter Amount to Buy</h2>
-            <label for="amount">Amount:</label>
-            <input class="input-amount" type="number" id="amount" name="amount" min="0.1" step="0.1"
-                   placeholder="Enter amount">
-            <button id="confirmBuyButton" class="buy-button">Confirm Buy</button>
+            <span id="cancelBuyButton" class="cancel-button modal-button">&times;</span>
+            <h2>Buy <span id="buyCryptoSymbol"></span></h2> <label for="buy-amount">Amount:</label> <input class="input-amount" type="number" id="buy-amount" name="buy-amount" min="0.00000001" step="0.00000001" placeholder="Enter amount">
+            <button id="confirmBuyButton" class="buy-button modal-button">Confirm Buy</button>
         </div>
     </div>
 </div>
 
-<div id="tab2" class="tab-content">
+<<div id="tab2" class="tab-content">
     <h2>Portfolio</h2>
     <div class="transactionList" id="transactionList">
-        <p>Loading portfolio...</p>
+        <p>Loading transaction history...</p>
     </div>
-    <div class="holdingList" id="holdingList" style="display: none;">
-        <p>Loading portfolio...</p>
+    <div class="holdingList" id="holdingList">
+        <p>Loading holdings...</p>
     </div>
-    <div id="sellModal" class="modal">
+
+    <div id="sellModal" class="modal" style="display:none;">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Enter Amount to Sell</h2>
-            <label for="amount">Amount:</label>
-            <input class="input-amount" type="number" id="amount" name="amount" min="0.1" step="0.1"
-                   placeholder="Enter amount">
-            <button id="confirmSellButton" class="buy-button">Confirm Sell</button>
+            <span id="cancelSellButton" class="cancel-button modal-button">&times;</span>
+            <h2>Sell <span id="sellCryptoSymbol"></span></h2>
+            <p>Available to sell: <span id="sellMaxQuantity"></span></p>
+            <label for="sell-amount">Amount:</label>
+            <input class="input-amount" type="number" id="sell-amount" name="sell-amount" min="0.00000001" step="0.00000001" placeholder="Enter amount">
+            <button id="confirmSellButton" class="sell-button modal-button">Confirm Sell</button>
         </div>
     </div>
+
     <div class="portfolio-footer">
         <span id="balanceDisplay">Balance: $0.00</span>
-
         <div class="transaction-history">
             <button id="transactionHistoryButton">Transaction History</button>
         </div>
@@ -85,7 +84,6 @@
 
 <!-- JavaScript Reference -->
 <script src="js/app.js"></script>
-<script src="js/priceDisplay.js"></script>
 <script src="js/account.js"></script>
 <script src="js/transactionLog.js"></script>
 <script src="js/holdingLog.js"></script>

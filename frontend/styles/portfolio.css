@@ -102,3 +102,27 @@
 .holding-item:last-child {
     border-bottom: none;
 }
+
+.sell-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 120px;
+    height: 40px;
+    color: white;
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.sell-button:hover {
+    background-color: #1a1a1a;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
