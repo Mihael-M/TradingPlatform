@@ -1,19 +1,16 @@
-
-
 .portfolio-footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
-    border-top: 1px solid #ccc;
+    background: linear-gradient(to right, #2c3e50, #3498db);
+    border-top: none;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
     z-index: 1000;
-    visibility: visible;
     opacity: 1;
 }
 
@@ -21,20 +18,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
-    width: 120px;
-    height: 40px;
-    color: white;
-    border-radius: 40px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    width: 130px;
+    height: 45px;
+    border-radius: 30px;
     cursor: pointer;
     font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     border: none;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
+.portfolio-footer button:hover {
+    background-color: #ecf0f1;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
 
 .portfolio-footer button#resetButton:hover {
     background-color: #bf0909;
@@ -42,15 +44,16 @@
     box-shadow: 0 6px 16px rgba(179, 34, 34, 0.5);
 }
 
-.portfolio-footer button:hover {
-    background-color: #1a1a1a;
-    transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-}
-
-#balanceDisplay {
+.balance-show {
     font-weight: bold;
     font-size: 16px;
+    border-radius: 30px;
+    width: fit-content;
+    padding: 8px 16px;
+    background-color: #ffffff;
+    color: #2c3e50;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-align: center;
 }
 
 .transaction-item{
