@@ -34,9 +34,7 @@ public class KrakenWebSocketClient {
                 String symbol = data.get("symbol").asText();
                 double price = data.get("last").asDouble();
 
-                // Create the price update message to send
                 String priceUpdate = "{ \"symbol\": \"" + symbol + "\", \"price\": " + price + " }";
-                // Forward the price update to the frontend
                 priceWebSocketHandler.sendPriceUpdate(priceUpdate);
             }
         }
