@@ -37,6 +37,10 @@ body {
     transition: transform 0.3s ease;
 }
 
+.tab-button{
+    width: 55px;
+}
+
 .tab:hover {
     transform: translateY(-2px) scale(1.1);
 }
