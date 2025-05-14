@@ -15,13 +15,10 @@ public class TransactionRepository {
     private final JdbcTemplate jdbcTemplate;
     private final IUUIDConverter uuidConverter;
 
-    // TODO: find a fix:
     public TransactionRepository(JdbcTemplate jdbcTemplate, IUUIDConverter uuidConverter) {
         this.jdbcTemplate = jdbcTemplate;
         this.uuidConverter = uuidConverter;
     }
-
-    // Making a new transaction...
 
     public TransactionEntity createTransaction(TransactionEntity entity) {
         String sql = "INSERT INTO transactions (id, type, crypto_symbol, quantity, unit_price, profit_loss, created_at, account_id) VALUES (?, ?::transaction_type, ?, ?, ?, ?, ?, ?)";

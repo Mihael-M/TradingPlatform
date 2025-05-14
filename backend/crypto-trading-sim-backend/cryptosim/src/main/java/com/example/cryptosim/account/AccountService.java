@@ -4,8 +4,6 @@ import com.example.cryptosim.converters.AccountConverter;
 import org.springframework.stereotype.Component;
 import utills.model.Account;
 
-import java.util.UUID;
-
 @Component
 public class AccountService implements Service {
 
@@ -32,7 +30,7 @@ public class AccountService implements Service {
     }
 
     @Override
-    public Account getAccount(UUID id) {
-        return accountConverter.convertToUser(accountRepository.getAccount(id));
+    public Account getAccount() {
+        return accountConverter.convertToUser(accountRepository.getAccount());
     }
 }

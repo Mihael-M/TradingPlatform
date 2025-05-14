@@ -16,6 +16,22 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @GetMapping("/account")
+    public ResponseEntity<Map<String, Object>> getAccount() {
+        try{
+            double balance = accountService.getBalance();
+            String email = accountService.getAccount().getEmail();
+            String id = accountService.getAccount().getId();
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", id);
+            response.put("balance", balance);
+            response.put("email", email);
+            return ResponseEntity.ok(response);
+        }
+        catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     @GetMapping("/balance")
     public ResponseEntity<Map<String, Double>> getBalance() {
         try {

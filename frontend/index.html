@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+
     <title>Trading Platform</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/images.css">
+    <link rel="stylesheet" href="styles/buy.css">
+    <link rel="stylesheet" href="styles/portfolio.css">
 
 </head>
 <body>
-<h1>Welcome to the Trading Platform</h1>
 
 <!-- Tabs -->
 <div class="tabs">
@@ -22,25 +29,65 @@
     </div>
 </div>
 
+
 <!-- Tab Content -->
 <div id="tab1" class="tab-content active">
     <h2>Trading Dashboard</h2>
-    <h1>Live Cryptocurrency Prices</h1>
 
     <div id="cryptoList">
         <p>Loading cryptocurrency prices...</p>
     </div>
-
-
+    <div id="buyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Amount to Buy</h2>
+            <label for="amount">Amount:</label>
+            <input class="input-amount" type="number" id="amount" name="amount" min="0.1" step="0.1"
+                   placeholder="Enter amount">
+            <button id="confirmBuyButton" class="buy-button">Confirm Buy</button>
+        </div>
+    </div>
 </div>
+
 <div id="tab2" class="tab-content">
     <h2>Portfolio</h2>
-    <p>This is where you can view the details of your investment portfolio.</p>
+    <div class="transactionList" id="transactionList">
+        <p>Loading portfolio...</p>
+    </div>
+    <div class="holdingList" id="holdingList" style="display: none;">
+        <p>Loading portfolio...</p>
+    </div>
+    <div id="sellModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Enter Amount to Sell</h2>
+            <label for="amount">Amount:</label>
+            <input class="input-amount" type="number" id="amount" name="amount" min="0.1" step="0.1"
+                   placeholder="Enter amount">
+            <button id="confirmSellButton" class="buy-button">Confirm Sell</button>
+        </div>
+    </div>
+    <div class="portfolio-footer">
+        <span id="balanceDisplay">Balance: $0.00</span>
+
+        <div class="transaction-history">
+            <button id="transactionHistoryButton">Transaction History</button>
+        </div>
+        <div class="holding-holder">
+            <button id="holdingsButton">Holdings</button>
+        </div>
+        <div class="reset">
+            <button id="resetButton">Reset</button>
+        </div>
+    </div>
 </div>
 
 
 <!-- JavaScript Reference -->
 <script src="js/app.js"></script>
 <script src="js/priceDisplay.js"></script>
+<script src="js/account.js"></script>
+<script src="js/transactionLog.js"></script>
+<script src="js/holdingLog.js"></script>
 </body>
 </html>

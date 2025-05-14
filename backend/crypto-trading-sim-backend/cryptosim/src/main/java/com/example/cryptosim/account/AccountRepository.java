@@ -43,14 +43,9 @@ public class AccountRepository {
         return jdbcTemplate.update(sql, balance, "admin@gmail.com") >= 1;
 
     }
-    public AccountEntity getAccount(UUID accountId) {
-        String sql = "SELECT id, balance, email FROM account WHERE id = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new AccountRowMapper(uuidConverter), accountId);
-        }
-        catch (org.springframework.dao.EmptyResultDataAccessException e) {
-            return createAccount();
-        }
+    public AccountEntity getAccount() {
+        String sql = "SELECT id, balance, email FROM account WHERE email = ?";
+        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(uuidConverter), "admin@gmail.com");
     }
     public boolean resetAccount()
     {
@@ -61,7 +56,7 @@ public class AccountRepository {
         jdbcTemplate.update(deleteHoldingsSql, "admin@gmail.com");
 
         String sql = "DELETE FROM account WHERE email = ?";
-        boolean reset = false;
+        boolean reset;
         reset = jdbcTemplate.update(sql, "admin@gmail.com") >= 1;
         createAccount();
         return reset;

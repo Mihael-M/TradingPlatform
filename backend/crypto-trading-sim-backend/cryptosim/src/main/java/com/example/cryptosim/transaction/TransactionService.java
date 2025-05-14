@@ -37,25 +37,18 @@ public class TransactionService implements Service {
     }
     @Override
     public Transaction createTransaction(Transaction transaction) {
-
         try {
             if (transaction.getId() == null || transaction.getId().isBlank()) {
                 transaction.setId(UUID.randomUUID().toString());
             }
             var transactionEntity = this.transactionConverter.convertToEntity(transaction);
 
-            // 1. Check if price is cached, if not, retrieve it from CoinService and cache it.
-            double price = getCachedOrFetchPrice(transactionEntity.getCryptoSymbol());
-            transactionEntity.setUnitPrice(price);
-
-            // 2. Handle BUY and SELL transaction types
             TransactionType type = transactionEntity.getType();
             if (type == TransactionType.BUY) {
-                handleBuyTransaction(transactionEntity, price);
+                handleBuyTransaction(transactionEntity);
             } else if (type == TransactionType.SELL) {
-                handleSellTransaction(transactionEntity, price);
+                handleSellTransaction(transactionEntity);
             }
-            // 3. After handling the transaction, save it via transactionRepository
             this.transactionRepository.createTransaction(transactionEntity);
             return this.transactionConverter.convertToUser(transactionEntity);
         } catch (Exception e) {
@@ -63,65 +56,43 @@ public class TransactionService implements Service {
         }
     }
 
-    // Helper: get price from cache or fetch from CoinService and cache it
-    private final java.util.Map<String, Double> priceCache = new java.util.HashMap<>();
-    private double getCachedOrFetchPrice(String crypto) {
-        if (priceCache.containsKey(crypto)) {
-            return priceCache.get(crypto);
-        }
-        // Simulate CoinService call. Replace with real service as needed.
-        double fetchedPrice = fetchPriceFromCoinService(crypto);
-        priceCache.put(crypto, fetchedPrice);
-        return fetchedPrice;
-    }
-    private double fetchPriceFromCoinService(String crypto) {
-        // TODO: Replace with actual CoinService call
-        // For now, mock as 100.0 per unit
-        return 100.0;
-    }
+    private void handleBuyTransaction(TransactionEntity transactionEntity) {
+        var account = accountRepository.getAccount();
+        double totalCost = transactionEntity.getQuantity() * transactionEntity.getUnitPrice();
 
-    // Helper for BUY transactions
-    private void handleBuyTransaction(TransactionEntity transactionEntity, double price) {
-        // Check if account has enough balance
-        var account = accountRepository.getAccount(transactionEntity.getAccountId());
-        double totalCost = transactionEntity.getQuantity() * price;
+
         if (account.getBalance() < totalCost) {
             throw new NotEnoughBalanceToBuy("Insufficient balance for BUY transaction");
         }
-        // Deduct amount from balance
+
         account.setBalance(account.getBalance() - totalCost);
         accountRepository.updateBalance(-1 * totalCost);
 
-        // Update or create holding
         var holding = holdingRepository.getHolding(transactionEntity.getCryptoSymbol());
         if (holding == null) {
-            // Create new holding
             var entity = create.createHolding(transactionEntity);
             holdingRepository.createHolding(entity);
         } else {
-            // Update holding: increase quantity and update price
             holding.setQuantity(holding.getQuantity() + transactionEntity.getQuantity());
-            holding.setTotalValue(holding.getTotalValue() + transactionEntity.getQuantity() * price);
+            holding.setTotalValue(holding.getTotalValue() + transactionEntity.getQuantity() * transactionEntity.getUnitPrice());
             holdingRepository.updateHolding(holding);
         }
     }
 
-    // Helper for SELL transactions
-    private void handleSellTransaction(TransactionEntity transactionEntity, double price) {
-        // Update holding: decrease quantity
+    private void handleSellTransaction(TransactionEntity transactionEntity) {
         var holding = holdingRepository.getHolding(transactionEntity.getCryptoSymbol());
         if (holding == null || holding.getQuantity() < transactionEntity.getQuantity()) {
             throw new NotEnoughHoldings("Not enough holdings to SELL");
         }
         holding.setQuantity(holding.getQuantity() - transactionEntity.getQuantity());
+        holding.setTotalValue(holding.getTotalValue() - transactionEntity.getQuantity() * transactionEntity.getUnitPrice());
         if (holding.getQuantity() <= 0) {
             holdingRepository.deleteHolding(holding.getId());
         } else {
             holdingRepository.updateHolding(holding);
         }
-        // Add proceeds to account balance
-        var account = accountRepository.getAccount(transactionEntity.getAccountId());
-        double proceeds = transactionEntity.getQuantity() * price;
+        var account = accountRepository.getAccount();
+        double proceeds = transactionEntity.getQuantity() * transactionEntity.getUnitPrice();
         account.setBalance(account.getBalance() + proceeds);
         accountRepository.updateBalance(proceeds);
     }

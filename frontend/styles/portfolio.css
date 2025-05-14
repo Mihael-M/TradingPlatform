@@ -1,0 +1,104 @@
+
+
+.portfolio-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    border-top: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    visibility: visible;
+    opacity: 1;
+}
+
+.portfolio-footer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    width: 120px;
+    height: 40px;
+    color: white;
+    border-radius: 40px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+
+.portfolio-footer button#resetButton:hover {
+    background-color: #bf0909;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(179, 34, 34, 0.5);
+}
+
+.portfolio-footer button:hover {
+    background-color: #1a1a1a;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+#balanceDisplay {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.transaction-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+.transactionList{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.holding-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0;
+    font-size: 18px;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+.holdingList{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.holding-item:last-child {
+    border-bottom: none;
+}

@@ -62,7 +62,7 @@ public class KrakenWebSocketClient {
                      "channel": "ticker",
                      "symbol": [
                        "BTC/USD", "ETH/USD", "USDT/USD", "BNB/USD", "SOL/USD", "XRP/USD", "DOGE/USD", "TON/USD", "ADA/USD", "AVAX/USD",
-                       "SHIB/USD", "DOT/USD", "WTRX/USD", "LINK/USD", "ICP/USD", "MATIC/USD", "NEAR/USD", "BCH/USD", "UNI/USD", "LTC/USD"
+                       "SHIB/USD", "DOT/USD", "PEPE/USD", "LINK/USD", "ICP/USD", "MATIC/USD", "NEAR/USD", "BCH/USD", "UNI/USD", "LTC/USD"
                      ]
                    }
                  }

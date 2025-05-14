@@ -6,7 +6,10 @@ import java.util.UUID;
 
 public interface Service {
     boolean updateBalance(double amount);
+
     double getBalance();
+
     boolean resetAccount();
-    Account getAccount(UUID accountId);
+
+    Account getAccount();
 }
