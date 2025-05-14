@@ -17,10 +17,6 @@ public class CryptoService {
         this.krakenWebSocketClient = krakenWebSocketClient;
     }
 
-//    public double getCoinPrice(String cryptoId) throws Exception {
-//       //return krakenWebSocketClient.onMessage().getCurrentPrice();
-//    }
-
     private String formatUrl(String cryptoId) {
         return String.format("https://api.kraken.com/0/public/Ticker?pair=%sUSD", cryptoId);
     }

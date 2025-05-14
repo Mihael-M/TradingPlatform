@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 
 public class Transaction {
     private String id;
-    private TransactionType type;  // "BUY" or "SELL"
-    private String crypto;         // e.g., "BTC"
-    private double quantity;       // Amount of cryptocurrency bought/sold
-    private double unitPrice;       // Price per unit at the time of transaction
+    private TransactionType type;
+    private String crypto;
+    private double quantity;
+    private double unitPrice;
     private double profitLoss;
-    private LocalDateTime timestamp; // Timestamp of the transaction
+    private LocalDateTime timestamp;
     private String accountId;
 
     public Transaction(String id, TransactionType type, String crypto, double quantity, double unitPrice,double profitLoss, LocalDateTime timestamp, String accountId) {

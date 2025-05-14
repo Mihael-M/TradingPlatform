@@ -13,7 +13,6 @@ public class CryptoController {
 
     @GetMapping("/cryptos")
     public List<String> getCryptoNames() {
-        // In a real application, this could fetch top 20 cryptocurrencies from an API or database
         return Arrays.asList("BTC", "ETH", "USDT", "BNB", "SOL", "XRP", "DOGE", "TON", "ADA", "AVAX",
                 "SHIB", "DOT", "PEPE", "LINK", "ICP", "MATIC", "NEAR", "BCH", "UNI", "LTC");
     }

@@ -21,6 +21,9 @@
 
 <!-- Tabs -->
 <div class="tabs">
+    <div>
+        <h1>Trading Platform Simulation</h1>
+    </div>
     <div class="tab active" data-target="tab1">
         <img class="tab-button" src="assets/stock_2737446.png" alt="Trading Dashboard">
     </div>
@@ -35,7 +38,7 @@
     <h2>Trading Dashboard</h2>
 
     <div id="cryptoList">
-        <p>Loading cryptocurrency prices...</p>
+
     </div>
 
     <div id="buyModal" class="modal" style="display:none;">
@@ -53,7 +56,7 @@
         <p>Loading transaction history...</p>
     </div>
     <div class="holdingList" id="holdingList">
-        <p>Loading holdings...</p>
+        <div id="holdingLoading"><p>Loading holdings...</p></div>
     </div>
 
     <div id="sellModal" class="modal" style="display:none;">
@@ -86,6 +89,6 @@
 <script src="js/app.js"></script>
 <script src="js/account.js"></script>
 <script src="js/transactionLog.js"></script>
-<script src="js/holdingLog.js"></script>
+<script src="js/portfolioLog.js"></script>
 </body>
 </html>
